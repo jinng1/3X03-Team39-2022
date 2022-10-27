@@ -150,6 +150,10 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 #Session settings
+SESSION_ENGINE ='django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 43200 #12 hours of active use
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+# SESSION_COOKIE_SECURE = True
