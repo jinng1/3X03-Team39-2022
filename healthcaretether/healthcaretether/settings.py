@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
@@ -149,6 +150,7 @@ LOGIN_REDIRECT_URL = "/"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+
 #Session settings
 SESSION_ENGINE ='django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 43200 #12 hours of active use
@@ -157,3 +159,35 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = 'Lax'
 # SESSION_COOKIE_SECURE = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'formatters':{
+        'main_formatter':{
+            'format': "{asctime} - {levelname} - {module} - {message}",
+            'style': '{',
+        }
+    },
+    'handlers':{
+        'console':{
+            'class': "logging.StreamHandler",
+            'formatter': "main_formatter",
+        },
+        'file':{
+            'class': "logging.FileHandler",
+            'filename': 'info.log',
+            'formatter': "main_formatter",
+        },
+    },
+    'loggers':{
+        'main':{
+            'handlers': ['file','console'],
+            'propagate': True,
+            'level': "INFO",
+        },
+    },
+
+}
+
