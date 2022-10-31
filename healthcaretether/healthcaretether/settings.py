@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
@@ -148,5 +149,36 @@ AUTH_USER_MODEL = 'main.CustomUser'
 LOGIN_REDIRECT_URL = "/"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'formatters':{
+        'main_formatter':{
+            'format': "{asctime} - {levelname} - {module} - {message}",
+            'style': '{',
+        }
+    },
+    'handlers':{
+        'console':{
+            'class': "logging.StreamHandler",
+            'formatter': "main_formatter",
+        },
+        'file':{
+            'class': "logging.FileHandler",
+            'filename': 'info.log',
+            'formatter': "main_formatter",
+        },
+    },
+    'loggers':{
+        'main':{
+            'handlers': ['file','console'],
+            'propagate': True,
+            'level': "INFO",
+        },
+    },
+
+}
 
 
