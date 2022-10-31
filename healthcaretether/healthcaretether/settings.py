@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'main',
+    'mfa',
+    'sslserver'
 ]
 
 
@@ -145,8 +147,35 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'main.CustomUser'
-LOGIN_REDIRECT_URL = "/"
+#LOGIN_REDIRECT_URL = "/"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+LOGIN_URL="/auth/login"
 
 
+# Session Settings
+
+#SESSION_COOKIE_SAMESITE = 'Strict' # Prevents the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link.
+#SESSION_COOKIE_SECURE = 'True' # Ensures that the cookie is only sent under an HTTPS connection. Prevent unencrypted  cookie from being used to hijack a user's sessions
+
+from django.conf.global_settings import PASSWORD_HASHERS as DEFAULT_PASSWORD_HASHERS #Preferably at the same place where you import your other modules
+MFA_UNALLOWED_METHODS=()   # Methods that shouldn't be allowed for the user e.g ('TOTP','U2F',)
+MFA_LOGIN_CALLBACK="healthcaretether.auth.create_session"      # A function that should be called by username to login the user in session
+MFA_RECHECK=True           # Allow random rechecking of the user
+MFA_REDIRECT_AFTER_REGISTRATION="mfa_home"   # Allows Changing the page after successful registeration
+MFA_SUCCESS_REGISTRATION_MSG = "Go to Security Home" # The text of the link
+MFA_RECHECK_MIN=10         # Minimum interval in seconds
+MFA_RECHECK_MAX=30         # Maximum in seconds
+MFA_QUICKLOGIN=True        # Allow quick login for returning users by provide only their 2FA
+MFA_ALWAYS_GO_TO_LAST_METHOD = False # Always redirect the user to the last method used to save a click (Added in 2.6.0).
+MFA_RENAME_METHODS={} #Rename the methods in a more user-friendly way e.g {"RECOVERY":"Backup Codes"} (Added in 2.6.0)
+MFA_HIDE_DISABLE=('FIDO2',)     # Can the user disable his key (Added in 1.2.0).  
+PASSWORD_HASHERS = DEFAULT_PASSWORD_HASHERS # Comment if PASSWORD_HASHER already set in your settings.py
+PASSWORD_HASHERS += ['mfa.recovery.Hash'] 
+RECOVERY_ITERATION = 350000 #Number of iteration for recovery code, higher is more secure, but uses more resources for generation and check...
+
+TOKEN_ISSUER_NAME="PROJECT_NAME"      #TOTP Issuer name
+
+U2F_APPID="https://localhost:8000"    #URL For U2F
+FIDO_SERVER_ID="localhost"      # Server rp id for FIDO2, it is the full domain of your project
+FIDO_SERVER_NAME="PROJECT_NAME"
