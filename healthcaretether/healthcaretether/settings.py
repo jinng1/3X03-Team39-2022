@@ -15,6 +15,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from django.conf.global_settings import PASSWORD_HASHERS as DEFAULT_PASSWORD_HASHERS
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.env'))
@@ -37,7 +38,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -154,11 +155,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 LOGIN_URL="/auth/login"
 
 
-# Session Settings
-
-SESSION_COOKIE_SAMESITE = 'Strict' # Prevents the cookie from being sent by the browser to the target site in all cross-site browsing context, even when following a regular link.
-SESSION_COOKIE_SECURE = 'True' # Ensures that the cookie is only sent under an HTTPS connection. Prevent unencrypted  cookie from being used to hijack a user's sessions
-
 # MFA Settings
 
 MFA_UNALLOWED_METHODS=('U2F', 'TOTP', 'Trusted_Devices', 'Email', 'RECOVERY')   # Methods that shouldn't be allowed for the user e.g ('TOTP','U2F',)
@@ -181,3 +177,43 @@ TOKEN_ISSUER_NAME="PROJECT_NAME"      #TOTP Issuer name
 U2F_APPID="https://localhost:8000"    #URL For U2F
 FIDO_SERVER_ID="localhost"      # Server rp id for FIDO2, it is the full domain of your project
 FIDO_SERVER_NAME="PROJECT_NAME"
+
+#Session settings
+SESSION_ENGINE ='django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 43200 #12 hours of active use
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Strict'
+# SESSION_COOKIE_SECURE = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'formatters':{
+        'main_formatter':{
+            'format': "{asctime} - {levelname} - {module} - {message}",
+            'style': '{',
+        }
+    },
+    'handlers':{
+        'console':{
+            'class': "logging.StreamHandler",
+            'formatter': "main_formatter",
+        },
+        'file':{
+            'class': "logging.FileHandler",
+            'filename': 'info.log',
+            'formatter': "main_formatter",
+        },
+    },
+    'loggers':{
+        'main':{
+            'handlers': ['file','console'],
+            'propagate': True,
+            'level': "INFO",
+        },
+    },
+
+}
