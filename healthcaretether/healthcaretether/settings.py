@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'main',
     'mfa',
-    'sslserver'
+    'sslserver',
+    'axes',
 ]
 
 
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'healthcaretether.urls'
@@ -82,6 +84,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'healthcaretether.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -217,3 +226,12 @@ LOGGING = {
     },
 
 }
+
+AXES_META_PRECEDENCE_ORDER = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+]
+
+#axes settings
+AXES_LOCK_OUT_BY_USER_OR_IP=True
+AXES_FAILURE_LIMIT=5
