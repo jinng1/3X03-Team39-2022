@@ -174,11 +174,11 @@ PASSWORD_HASHERS = DEFAULT_PASSWORD_HASHERS # Comment if PASSWORD_HASHER already
 PASSWORD_HASHERS += ['mfa.recovery.Hash'] 
 RECOVERY_ITERATION = 350000 #Number of iteration for recovery code, higher is more secure, but uses more resources for generation and check...
 
-TOKEN_ISSUER_NAME="PROJECT_NAME"      #TOTP Issuer name
+TOKEN_ISSUER_NAME="healthcaretether"      #TOTP Issuer name
 
-U2F_APPID="https://localhost:8000"    #URL For U2F
-FIDO_SERVER_ID="localhost"      # Server rp id for FIDO2, it is the full domain of your project
-FIDO_SERVER_NAME="PROJECT_NAME"
+U2F_APPID="https://healthcaretether.xyz"    # URL For U2F
+FIDO_SERVER_ID="healthcaretether.xyz"      # Server rp id for FIDO2, full domain
+FIDO_SERVER_NAME="healthcaretether"
 
 #Session settings
 SESSION_ENGINE ='django.contrib.sessions.backends.db'
