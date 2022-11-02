@@ -28,6 +28,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< Updated upstream
 DEBUG = False
 #DEBUG = int(os.environ.get("DEBUG", default=0))
 
@@ -35,7 +36,19 @@ ALLOWED_HOSTS =  ['healthcaretether.xyz']
 
 CSRF_TRUSTED_ORIGINS = ['https://healthcaretether.xyz']
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+=======
+<<<<<<< Updated upstream
+DEBUG = 1
 
+ALLOWED_HOSTS = []
+=======
+DEBUG = False
+
+ALLOWED_HOSTS = ['healthcaretether.xyz']
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+
+# CSRF_TRUSTED_ORIGINS = ['http://localhost:1337']
 
 # Application definition
 
@@ -141,10 +154,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static')
-]
+STATIC_ROOT = '/home/app/web/static/'
+#STATIC_ROOT = BASE_DIR / 'staticfiles/'
+#STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR,'static'),
+#    '/home/app/web/static/'
+#]
+#    os.path.join(BASE_DIR,'static')
+#]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -176,9 +193,21 @@ RECOVERY_ITERATION = 350000 #Number of iteration for recovery code, higher is mo
 
 TOKEN_ISSUER_NAME="healthcaretether"      #TOTP Issuer name
 
+<<<<<<< Updated upstream
 U2F_APPID="https://healthcaretether.xyz"    # URL For U2F
 FIDO_SERVER_ID="healthcaretether.xyz"      # Server rp id for FIDO2, full domain
 FIDO_SERVER_NAME="healthcaretether"
+=======
+<<<<<<< Updated upstream
+U2F_APPID="https://localhost:8000"    #URL For U2F
+FIDO_SERVER_ID="localhost"      # Server rp id for FIDO2, it is the full domain of your project
+FIDO_SERVER_NAME="PROJECT_NAME"
+=======
+U2F_APPID="https://healthcaretether.xyz"    #URL For U2F
+FIDO_SERVER_ID="healthcaretether.xyz"      # Server rp id for FIDO2, it is the full domain of your project
+FIDO_SERVER_NAME="healthcaretether"
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 #Session settings
 SESSION_ENGINE ='django.contrib.sessions.backends.db'
@@ -218,4 +247,20 @@ LOGGING = {
         },
     },
 
+<<<<<<< Updated upstream
 }
+<<<<<<< Updated upstream
+=======
+
+AXES_META_PRECEDENCE_ORDER = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+]
+
+#axes settings
+AXES_LOCK_OUT_BY_USER_OR_IP=True
+AXES_FAILURE_LIMIT=5
+=======
+}
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
