@@ -235,3 +235,5 @@ AXES_META_PRECEDENCE_ORDER = [
 #axes settings
 AXES_LOCK_OUT_BY_USER_OR_IP=True
 AXES_FAILURE_LIMIT=5
+
+#testing webhook
