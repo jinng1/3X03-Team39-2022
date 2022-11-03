@@ -28,7 +28,7 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-<<<<<<< Updated upstream
+
 DEBUG = False
 #DEBUG = int(os.environ.get("DEBUG", default=0))
 
@@ -36,17 +36,10 @@ ALLOWED_HOSTS =  ['healthcaretether.xyz']
 
 CSRF_TRUSTED_ORIGINS = ['https://healthcaretether.xyz']
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-=======
-<<<<<<< Updated upstream
-DEBUG = 1
 
-ALLOWED_HOSTS = []
-=======
-DEBUG = False
 
-ALLOWED_HOSTS = ['healthcaretether.xyz']
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
+
 
 # CSRF_TRUSTED_ORIGINS = ['http://localhost:1337']
 
@@ -63,7 +56,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'main',
     'mfa',
-    'sslserver'
+    'sslserver',
+    'axes',
 ]
 
 
@@ -75,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'healthcaretether.urls'
@@ -97,6 +92,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'healthcaretether.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -193,21 +195,11 @@ RECOVERY_ITERATION = 350000 #Number of iteration for recovery code, higher is mo
 
 TOKEN_ISSUER_NAME="healthcaretether"      #TOTP Issuer name
 
-<<<<<<< Updated upstream
-U2F_APPID="https://healthcaretether.xyz"    # URL For U2F
-FIDO_SERVER_ID="healthcaretether.xyz"      # Server rp id for FIDO2, full domain
-FIDO_SERVER_NAME="healthcaretether"
-=======
-<<<<<<< Updated upstream
-U2F_APPID="https://localhost:8000"    #URL For U2F
-FIDO_SERVER_ID="localhost"      # Server rp id for FIDO2, it is the full domain of your project
-FIDO_SERVER_NAME="PROJECT_NAME"
-=======
+
 U2F_APPID="https://healthcaretether.xyz"    #URL For U2F
 FIDO_SERVER_ID="healthcaretether.xyz"      # Server rp id for FIDO2, it is the full domain of your project
 FIDO_SERVER_NAME="healthcaretether"
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
 
 #Session settings
 SESSION_ENGINE ='django.contrib.sessions.backends.db'
@@ -247,10 +239,8 @@ LOGGING = {
         },
     },
 
-<<<<<<< Updated upstream
 }
-<<<<<<< Updated upstream
-=======
+
 
 AXES_META_PRECEDENCE_ORDER = [
     'HTTP_X_FORWARDED_FOR',
@@ -259,8 +249,4 @@ AXES_META_PRECEDENCE_ORDER = [
 
 #axes settings
 AXES_LOCK_OUT_BY_USER_OR_IP=True
-AXES_FAILURE_LIMIT=5
-=======
-}
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+AXES_FAILURE_LIMIT=10
